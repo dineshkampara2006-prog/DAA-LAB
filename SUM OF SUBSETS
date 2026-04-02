@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int w[10], x[10], n, target;
+
+void subset(int s, int k, int r) {
+    int i;
+
+    if(s == target) {
+        for(i = 0; i < k; i++) {
+            if(x[i] == 1)
+                printf("%d ", w[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    if(k >= n)
+        return;
+
+    x[k] = 1;
+    subset(s + w[k], k + 1, r - w[k]);
+
+    x[k] = 0;
+    subset(s, k + 1, r - w[k]);
+}
+
+int main() {
+    int i, sum = 0;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(i = 0; i < n; i++) {
+        scanf("%d", &w[i]);
+        sum += w[i];
+    }
+
+    printf("Enter target sum: ");
+    scanf("%d", &target);
+
+    subset(0, 0, sum);
+
+    return 0;
+}
